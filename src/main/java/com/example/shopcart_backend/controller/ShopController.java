@@ -1,7 +1,9 @@
 package com.example.shopcart_backend.controller;
 
 import com.example.shopcart_backend.dao.ProductDao;
+import com.example.shopcart_backend.dao.UserregistrationDao;
 import com.example.shopcart_backend.model.Products;
+import com.example.shopcart_backend.model.Userregistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +41,19 @@ public class ShopController {
         System.out.println(productname);
         return (List<Products>) dao.SearchProduct(p.getProductname());
 
+    }
+    @Autowired
+    private UserregistrationDao dao1;
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/userregistration",consumes = "application/json",produces = "application/json")
+   public Map<String,String> UserRegistration(@RequestBody Userregistration u){
+        System.out.println(u.getName().toString());
+        System.out.println(u.getAddress().toString());
+        System.out.println(u.getPhone().toString());
+        System.out.println(u.getEmail().toString());
+        dao1.save(u);
+        HashMap <String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 }
