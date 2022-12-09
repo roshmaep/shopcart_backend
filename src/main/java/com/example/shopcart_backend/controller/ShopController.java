@@ -46,14 +46,31 @@ public class ShopController {
     private UserregistrationDao dao1;
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/userregistration",consumes = "application/json",produces = "application/json")
-   public Map<String,String> UserRegistration(@RequestBody Userregistration u){
-        System.out.println(u.getName().toString());
-        System.out.println(u.getAddress().toString());
-        System.out.println(u.getPhone().toString());
-        System.out.println(u.getEmail().toString());
+    public Map<String,String> UserRegistration(@RequestBody Userregistration u){
         dao1.save(u);
         HashMap <String,String> map=new HashMap<>();
         map.put("status","success");
         return map;
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/userlogin", consumes = "application/json", produces = "application/json")
+    public HashMap<String, String> UserLogin(@RequestBody Userregistration u){
+
+        String email=String.valueOf(u.getEmail());
+        String password=String.valueOf(u.getPassword());
+        List<Userregistration> result=(List<Userregistration>) dao1.UserLogin(email,password);
+        HashMap<String,String> st=new HashMap<>();
+        if (result.size()==0)
+        {
+            st.put("status","failed");
+        }
+        else
+        {
+            int id=result.get(0).getId();
+            st.put("userid",String.valueOf(id));
+            st.put("status","success");
+        }
+        return st;
     }
 }
