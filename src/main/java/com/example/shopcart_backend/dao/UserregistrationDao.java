@@ -12,6 +12,7 @@ public interface UserregistrationDao extends CrudRepository<Userregistration,Int
     @Query(value = "SELECT `id`, `address`, `cpassword`, `email`, `name`, `password`, `phone` FROM `registration` WHERE `email`=:email AND `password`=:password",nativeQuery = true)
     List<Userregistration> UserLogin(@Param("email") String email, @Param("password") String password);
 
-    @Query(value="SELECT `id`, `address`, `cpassword`, `email`, `name`, `password`, `phone` FROM `registration` WHERE `id`= :id",nativeQuery = true)
-    List<Userregistration> ViewProfile(@Param("id") Integer id);
+
+    @Query(value = "SELECT `id`, `address`, `cpassword`, `email`, `name`, `password`, `phone` FROM `registration` WHERE `id`=:id",nativeQuery = true)
+    List<Userregistration> FindUser(@Param("id") Integer id);
 }
